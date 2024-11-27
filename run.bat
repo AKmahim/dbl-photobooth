@@ -3,7 +3,6 @@ cd /d "%~dp0"
 
 
 :: Run React app with Vite
-cd photobooth
 start cmd /k "npm run dev"
 
 :: Open React app in the browser

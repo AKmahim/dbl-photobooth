@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import background from "../../assets/qr.jpg";
-import frame from "../../assets/frame.png"; // 1024*1024
+// import frame from "../../assets/frame.png"; // 1024*1024
 // import frame from "../../assets/frame2.png"; // 1280*720 
 // import frame from "../../assets/frame3.png"; // 1280*720 reposition frame
+import frame from "../../assets/frame4.png"; // 640*480 reposition frame
 import { useNavigate } from "react-router-dom";
 
 const CaptureImage = () => {
@@ -47,30 +48,30 @@ const CaptureImage = () => {
     if (canvasRef.current && videoRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
+  
+      // // Set canvas size to match video
+      // canvas.width = videoRef.current.videoWidth;
+      // canvas.height = videoRef.current.videoHeight;
 
       // Set canvas size to match video
-    //   canvas.width = videoRef.current.videoWidth;
-    //   canvas.height = videoRef.current.videoHeight;
-    canvas.width = 640;
-    canvas.height = 480;
-    console.log(videoRef.current.videoHeight);
-    
-    console.log('canvas=>' , canvas.width,canvas.height);
-    
-
-      // Draw the video frame
-    //   context.translate(canvas.width, 0);
-    //   context.scale(-1, 1);
+      canvas.width = 720;
+      canvas.height = 480;
+  
+      console.log(videoRef.current.videoHeight);
+      console.log('canvas=>', canvas.width, canvas.height);
+  
+      // Draw the video frame with mirror effect
+      // context.translate(canvas.width, 0);
+      // context.scale(-1, 1);
       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-      // Draw the overlay
+  
+      // Draw the overlay without mirror effect
       const img = new Image();
       img.src = frame;
       img.onload = () => {
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
         const dataURL = canvas.toDataURL("image/png");
         console.log("Captured Image Data URL:", dataURL);
-        // Redirect to /preview with the result data
         navigate("/preview", { state: { imageData: dataURL } });
       };
     }
