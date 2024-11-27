@@ -45,28 +45,81 @@ const CaptureImage = () => {
     }
   }, [countdown]);
 
+  // const captureImage = () => {
+  //   if (canvasRef.current && videoRef.current) {
+  //     const canvas = canvasRef.current;
+  //     const context = canvas.getContext("2d");
+  
+  //     // // Set canvas size to match video
+  //     canvas.width = videoRef.current.videoWidth; //1280
+  //     canvas.height = videoRef.current.videoHeight; //720
+
+  //     // Set canvas size to match video
+  //     // canvas.width = 640;
+  //     // canvas.height = 480;
+  
+  //     console.log(videoRef.current.videoHeight);
+  //     console.log('canvas=>', canvas.width, canvas.height);
+  
+  //     // Draw the video frame with mirror effect
+  //     // context.translate(canvas.width, 0);
+  //     // context.scale(-1, 1);
+  //     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+  
+  //     // Draw the overlay without mirror effect
+  //     const img = new Image();
+  //     img.src = frame;
+  //     img.onload = () => {
+  //       context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  //       const dataURL = canvas.toDataURL("image/png");
+  //       console.log("Captured Image Data URL:", dataURL);
+  //       navigate("/preview", { state: { imageData: dataURL } });
+  //     };
+  //   }
+  // };
+
   const captureImage = () => {
     if (canvasRef.current && videoRef.current) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
   
-      // // Set canvas size to match video
-      canvas.width = videoRef.current.videoWidth; //1280
-      canvas.height = videoRef.current.videoHeight; //720
-
-      // Set canvas size to match video
-      // canvas.width = 640;
-      // canvas.height = 480;
+      // Set canvas size to the cropped dimensions
+      canvas.width = 640;
+      canvas.height = 480;
   
-      console.log(videoRef.current.videoHeight);
-      console.log('canvas=>', canvas.width, canvas.height);
+      // Calculate cropping area (center crop)
+      const videoWidth = videoRef.current.videoWidth;
+      const videoHeight = videoRef.current.videoHeight;
   
-      // Draw the video frame with mirror effect
-      // context.translate(canvas.width, 0);
-      // context.scale(-1, 1);
-      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const cropWidth = 640;
+      const cropHeight = 480;
   
-      // Draw the overlay without mirror effect
+      const cropX = (videoWidth - cropWidth) / 2;
+      const cropY = (videoHeight - cropHeight) / 2;
+  
+      console.log(`Cropping from center: x=${cropX}, y=${cropY}, width=${cropWidth}, height=${cropHeight}`);
+  
+      // Apply mirror effect by flipping the context horizontally
+      context.translate(canvas.width, 0);
+      context.scale(-1, 1);
+  
+      // Draw the cropped video frame with the mirror effect
+      context.drawImage(
+        videoRef.current, // Source
+        cropX, // Source X
+        cropY, // Source Y
+        cropWidth, // Source Width
+        cropHeight, // Source Height
+        0, // Destination X
+        0, // Destination Y
+        canvas.width, // Destination Width
+        canvas.height // Destination Height
+      );
+  
+      // Reset the transform to prevent overlay image from flipping
+      context.setTransform(1, 0, 0, 1, 0, 0);
+  
+      // Draw the overlay
       const img = new Image();
       img.src = frame;
       img.onload = () => {
@@ -77,6 +130,8 @@ const CaptureImage = () => {
       };
     }
   };
+  
+  
 
   return (
     <div
