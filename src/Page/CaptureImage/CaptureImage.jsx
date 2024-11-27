@@ -3,7 +3,8 @@ import background from "../../assets/qr.jpg";
 // import frame from "../../assets/frame.png"; // 1024*1024
 // import frame from "../../assets/frame2.png"; // 1280*720 
 // import frame from "../../assets/frame3.png"; // 1280*720 reposition frame
-import frame from "../../assets/frame4.png"; // 640*480 reposition frame
+// import frame from "../../assets/frame4.png"; // 640*480 reposition frame
+import frame from "../../assets/frame5.png"; // 640*480 reposition logo
 import { useNavigate } from "react-router-dom";
 
 const CaptureImage = () => {
@@ -50,12 +51,12 @@ const CaptureImage = () => {
       const context = canvas.getContext("2d");
   
       // // Set canvas size to match video
-      // canvas.width = videoRef.current.videoWidth;
-      // canvas.height = videoRef.current.videoHeight;
+      canvas.width = videoRef.current.videoWidth; //1280
+      canvas.height = videoRef.current.videoHeight; //720
 
       // Set canvas size to match video
-      canvas.width = 720;
-      canvas.height = 480;
+      // canvas.width = 640;
+      // canvas.height = 480;
   
       console.log(videoRef.current.videoHeight);
       console.log('canvas=>', canvas.width, canvas.height);
