@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Aclonica&display=swap");
+
+body {
+  font-family: "Aclonica", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* .textgradient {
+  background: linear-gradient(to top, #eb475c, #fba209);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+} */
+
+.bgbg {
+  /* background-image: url("./assets/Page3.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed; */
+  background-size: 100% 100%;
+}
