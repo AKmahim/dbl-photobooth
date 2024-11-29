@@ -34,7 +34,7 @@ const Preview = () => {
                         if (photoUrl) {
                             setTimeout(() => {
                                 navigate('/qr-code', { state: { photoUrl } });
-                            }, 5000); // 10-second delay
+                            }, 3000); // 10-second delay
                         }
                     } else {
                         console.error("Error in API response:", response);
