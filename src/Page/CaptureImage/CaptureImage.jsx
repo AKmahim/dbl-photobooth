@@ -4,7 +4,7 @@ import background from "../../assets/qr.jpg";
 // import frame from "../../assets/frame2.png"; // 1280*720 
 // import frame from "../../assets/frame3.png"; // 1280*720 reposition frame
 // import frame from "../../assets/frame4.png"; // 640*480 reposition frame
-import frame from "../../assets/frame6.png"; // 640*480 reposition logo
+import frame from "../../assets/frame7.png"; // 640*480 reposition logo
 import { useNavigate } from "react-router-dom";
 
 const CaptureImage = () => {

@@ -6,8 +6,8 @@ const Preview = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { imageData } = location.state || {}; // Access image data
-    const imageDataUrl = imageData;
-
+    const imageDataUrl =  imageData;
+    
     useEffect(() => {
         const uploadImageDataUrl = async () => {
             if (imageDataUrl) {
@@ -30,27 +30,14 @@ const Preview = () => {
                         const result = await response.json();
                         const photoUrl = result?.photo_url;
 
+                        // Redirect to "/qr-code" with a 10s delay, passing photoUrl as state
                         if (photoUrl) {
-                            // Add keypress listener
-                            const handleKeyPress = (event) => {
-                                if (event.key === 'q' || event.key === 'Q') {
-                                    navigate('/qr-code', { state: { photoUrl } });
-                                }
-                            };
-
-                            // Navigate after 20s delay
-                            const timeoutId = setTimeout(() => {
+                            
+                            setTimeout(() => {
                                 navigate('/qr-code', { state: { photoUrl } });
-                            }, 20000); // 20-second delay
+                            }, 20000); // 10-second delay
 
-                            // Attach keypress listener
-                            window.addEventListener('keydown', handleKeyPress);
-
-                            // Cleanup on unmount
-                            return () => {
-                                clearTimeout(timeoutId);
-                                window.removeEventListener('keydown', handleKeyPress);
-                            };
+                            
                         }
                     } else {
                         console.error("Error in API response:", response);
@@ -73,11 +60,13 @@ const Preview = () => {
                 backgroundPosition: "center",
             }}
         >
-            {imageData ? (
-                <img src={imageDataUrl} alt="Processed Image" className='border-red-100 border-2' />
-            ) : (
-                <p>No image data available</p>
-            )}
+                {imageData ? (
+                    <img src={imageDataUrl} alt="Processed Image" className='border-red-100 border-2' />
+                ) : (
+                    <p>No image data available</p>
+                )}
+            {/* <div className='w-[600px] h-[600px]'>
+            </div> */}
         </div>
     );
 };
